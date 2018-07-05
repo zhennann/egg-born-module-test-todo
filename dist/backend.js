@@ -1,0 +1,615 @@
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+  const schemas = {};
+  // todo
+  schemas.todo = {
+    type: 'object',
+    properties: {
+      atomName: {
+        type: 'string',
+        ebType: 'text',
+        ebTitle: 'What to do',
+        notEmpty: true,
+      },
+      completed: {
+        type: 'number',
+        ebType: 'toggle',
+        ebTitle: 'Completed',
+      },
+    },
+  };
+  // todo search
+  schemas.todoSearch = {
+    type: 'object',
+    properties: {
+      completed: {
+        type: 'number',
+        ebType: 'toggle',
+        ebTitle: 'Completed',
+      },
+    },
+  };
+  return schemas;
+};
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = app => {
+  const schemas = __webpack_require__(0)(app);
+  const meta = {
+    base: {
+      atoms: {
+        todo: {
+          info: {
+            title: 'Todo',
+            tableName: 'testTodo',
+          },
+          actions: {
+            review: {
+              code: 101,
+              title: 'Review',
+              flag: '1',
+            },
+          },
+          flags: {
+            1: {
+              title: 'Reviewing',
+            },
+            2: {
+              title: 'Reviewed',
+            },
+          },
+          validator: 'todo',
+          search: {
+            validator: 'todoSearch',
+          },
+        },
+      },
+      functions: {
+        createTodo: {
+          title: 'Create Todo',
+          scene: 'create',
+          autoRight: 1,
+          atomClassName: 'todo',
+          action: 'create',
+          actionModule: 'a-base',
+          actionComponent: 'action',
+          actionPath: '/a/base/atom/edit?atomId={{atomId}}&itemId={{itemId}}&atomClassId={{atomClassId}}&atomClassName={{atomClassName}}&atomClassIdParent={{atomClassIdParent}}',
+          sorting: 1,
+          menu: 1,
+        },
+        listTodo: {
+          title: 'Todo List',
+          scene: 'list',
+          autoRight: 1,
+          atomClassName: 'todo',
+          action: 'read',
+          actionPath: '/a/base/atom/list?module={{module}}&atomClassName={{atomClassName}}',
+          sorting: 1,
+          menu: 1,
+        },
+      },
+    },
+    validation: {
+      validators: {
+        todo: {
+          schemas: 'todo',
+        },
+        todoSearch: {
+          schemas: 'todoSearch',
+        },
+      },
+      keywords: {},
+      schemas: {
+        todo: schemas.todo,
+        todoSearch: schemas.todoSearch,
+      },
+    },
+  };
+  return meta;
+};
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+  class Todo extends app.meta.Model {
+    constructor(ctx) {
+      super(ctx, { table: 'testTodo', options: { disableDeleted: false } });
+    }
+  }
+  return Todo;
+};
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const todo = __webpack_require__(2);
+
+module.exports = app => {
+  const models = {
+    todo,
+  };
+  return models;
+};
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+
+  class Todo extends app.Service {
+
+    async create({ atomClass, key, atom, user }) {
+      // add todo
+      const res = await this.ctx.model.todo.insert({
+        atomId: key.atomId,
+      });
+      return { atomId: key.atomId, itemId: res.insertId };
+    }
+
+    async read({ atomClass, key, item, user }) {
+      // read
+    }
+
+    async select({ atomClass, options, items, user }) {
+      // select
+    }
+
+    async write({ atomClass, key, item, validation, user }) {
+      // update todo
+      await this.ctx.model.todo.update({
+        id: key.itemId,
+        completed: item.completed,
+      });
+    }
+
+    async delete({ atomClass, key, user }) {
+      // delete todo
+      await this.ctx.model.todo.delete({
+        id: key.itemId,
+      });
+    }
+
+    async action({ action, atomClass, key, user }) {
+      if (action === 101) {
+        // change flag
+        await this.ctx.meta.atom.flag({
+          key,
+          atom: { atomFlag: 2 },
+          user,
+        });
+      }
+    }
+
+    async enable({ atomClass, key, atom, user }) {
+      // enable
+      const atomFlag = atom.atomEnabled ? 1 : 0;
+      // change flag
+      await this.ctx.meta.atom.flag({
+        key,
+        atom: { atomFlag },
+        user,
+      });
+    }
+
+  }
+
+  return Todo;
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+
+  class Version extends app.Service {
+
+    async update(options) {
+      if (options.version === 1) {
+        // create table: testTodo
+        const sql = `
+          CREATE TABLE testTodo (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updatedAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            deleted int(11) DEFAULT '0',
+            iid int(11) DEFAULT '0',
+            atomId int(11) DEFAULT '0',
+            completed int(11) DEFAULT '0',
+            PRIMARY KEY (id)
+          )
+        `;
+        await this.ctx.model.query(sql);
+      }
+    }
+
+    async init(options) {
+      if (options.version === 1) {
+        // create role: reviewer
+        const roleAuthenticated = await this.ctx.meta.role.getSystemRole({ roleName: 'authenticated' });
+        await this.ctx.meta.role.add({
+          roleName: 'reviewer',
+          roleIdParent: roleAuthenticated.id,
+        });
+
+        // add role rights
+        const roleRights = [
+          { roleName: 'authenticated', action: 'create' },
+          { roleName: 'authenticated', action: 'write', scopeNames: 0 },
+          { roleName: 'authenticated', action: 'delete', scopeNames: 0 },
+          { roleName: 'authenticated', action: 'read', scopeNames: 'authenticated' },
+          { roleName: 'reviewer', action: 'review', scopeNames: 'authenticated' },
+        ];
+        const module = this.ctx.app.meta.modules[this.ctx.module.info.relativeName];
+        const atomClass = await this.ctx.meta.atomClass.get({ atomClassName: 'todo' });
+        for (const roleRight of roleRights) {
+        // role
+          const role = await this.ctx.meta.role.get({ roleName: roleRight.roleName });
+          // scope
+          let scope;
+          if (!roleRight.scopeNames) {
+            scope = 0;
+          } else {
+            const roleScope = await this.ctx.meta.role.get({ roleName: roleRight.scopeNames });
+            scope = [ roleScope.id ];
+          }
+          // add role right
+          await this.ctx.meta.role.addRoleRight({
+            roleId: role.id,
+            atomClassId: atomClass.id,
+            action: this.ctx.constant.module('a-base').atom.action[roleRight.action] || module.main.meta.base.atoms.todo
+              .actions[roleRight.action].code,
+            scope,
+          });
+        }
+      }
+    }
+
+    async test() {
+      // create test users: demo001,demo002
+      const users = [
+        { userName: 'demo001', roleName: 'registered' },
+        { userName: 'demo002', roleName: 'reviewer' },
+      ];
+      const userIds = [];
+      for (const user of users) {
+        // add user
+        userIds[user.userName] = await this.ctx.meta.user.add({
+          userName: user.userName,
+          realName: user.userName,
+        });
+        // add auth info for login
+        await this.ctx.performAction({
+          method: 'post',
+          url: '/a/authsimple/auth/add',
+          body: {
+            userId: userIds[user.userName],
+            password: '123456',
+          },
+        });
+        // role
+        const role = await this.ctx.meta.role.get({ roleName: user.roleName });
+        // add user role
+        await this.ctx.meta.role.addUserRole({
+          userId: userIds[user.userName],
+          roleId: role.id,
+        });
+      }
+    }
+
+  }
+
+  return Version;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const version = __webpack_require__(5);
+const todo = __webpack_require__(4);
+
+module.exports = app => {
+  const services = {
+    version,
+    todo,
+  };
+  return services;
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+
+  class TodoController extends app.Controller {
+
+    async create() {
+      const res = await this.ctx.service.todo.create(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async read() {
+      const res = await this.ctx.service.todo.read(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async select() {
+      const res = await this.ctx.service.todo.select(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async write() {
+      await this.ctx.service.todo.write(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async delete() {
+      await this.ctx.service.todo.delete(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async action() {
+      const res = await this.ctx.service.todo.action(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async enable() {
+      const res = await this.ctx.service.todo.enable(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+  }
+  return TodoController;
+};
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+  class VersionController extends app.Controller {
+
+    async update() {
+      await this.service.version.update(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async init() {
+      await this.service.version.init(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async test() {
+      await this.service.version.test(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+  }
+  return VersionController;
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const version = __webpack_require__(8);
+const todo = __webpack_require__(7);
+
+module.exports = app => {
+  const routes = [
+    // version
+    { method: 'post', path: 'version/update', controller: version, middlewares: 'inner' },
+    { method: 'post', path: 'version/init', controller: version, middlewares: 'inner' },
+    { method: 'post', path: 'version/test', controller: version, middlewares: 'test' },
+    // todo
+    { method: 'post', path: 'todo/create', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/read', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/select', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/write', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/delete', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/action', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/enable', controller: todo, middlewares: 'inner' },
+  ];
+  return routes;
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = {
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+// error code should start from 1001
+module.exports = {
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  Todo: '待办',
+  Review: '评审',
+  Reviewing: '评审中',
+  Reviewed: '已评审',
+  'Create Todo': '新建待办',
+  'Todo List': '待办清单',
+  'What to do': '要做什么',
+  Completed: '已完成',
+};
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = {
+  'zh-cn': __webpack_require__(12),
+};
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+// eslint-disable-next-line
+module.exports = appInfo => {
+  const config = {};
+  return config;
+};
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const config = __webpack_require__(14);
+const locales = __webpack_require__(13);
+const errors = __webpack_require__(11);
+const middlewares = __webpack_require__(10);
+
+module.exports = app => {
+
+  // routes
+  const routes = __webpack_require__(9)(app);
+  // services
+  const services = __webpack_require__(6)(app);
+  // models
+  const models = __webpack_require__(3)(app);
+  // meta
+  const meta = __webpack_require__(1)(app);
+
+  return {
+    routes,
+    services,
+    models,
+    config,
+    locales,
+    errors,
+    middlewares,
+    meta,
+  };
+
+};
+
+
+/***/ })
+/******/ ]);
+//# sourceMappingURL=backend.js.map
