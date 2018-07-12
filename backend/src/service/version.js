@@ -37,6 +37,7 @@ module.exports = app => {
           { roleName: 'authenticated', action: 'delete', scopeNames: 0 },
           { roleName: 'authenticated', action: 'read', scopeNames: 'authenticated' },
           { roleName: 'reviewer', action: 'review', scopeNames: 'authenticated' },
+          { roleName: 'superuser', action: 'review', scopeNames: 'authenticated' },
         ];
         const module = this.ctx.app.meta.modules[this.ctx.module.info.relativeName];
         const atomClass = await this.ctx.meta.atomClass.get({ atomClassName: 'todo' });
