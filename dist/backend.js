@@ -82,148 +82,76 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+const config = __webpack_require__(1);
+const locales = __webpack_require__(2);
+const errors = __webpack_require__(4);
+const middlewares = __webpack_require__(5);
 
 module.exports = app => {
-  const schemas = {};
-  // todo
-  schemas.todo = {
-    type: 'object',
-    properties: {
-      atomName: {
-        type: 'string',
-        ebType: 'text',
-        ebTitle: 'What to do',
-        notEmpty: true,
-      },
-      completed: {
-        type: 'number',
-        ebType: 'toggle',
-        ebTitle: 'Completed',
-      },
-    },
+
+  // routes
+  const routes = __webpack_require__(6)(app);
+  // services
+  const services = __webpack_require__(9)(app);
+  // models
+  const models = __webpack_require__(12)(app);
+  // meta
+  const meta = __webpack_require__(14)(app);
+
+  return {
+    routes,
+    services,
+    models,
+    config,
+    locales,
+    errors,
+    middlewares,
+    meta,
   };
-  // todo search
-  schemas.todoSearch = {
-    type: 'object',
-    properties: {
-      completed: {
-        type: 'number',
-        ebType: 'toggle',
-        ebTitle: 'Completed',
-      },
-    },
-  };
-  return schemas;
+
 };
 
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-module.exports = app => {
-  const schemas = __webpack_require__(0)(app);
-  const meta = {
-    base: {
-      atoms: {
-        todo: {
-          info: {
-            title: 'Todo',
-            tableName: 'testTodo',
-          },
-          actions: {
-            review: {
-              code: 101,
-              title: 'Review',
-              flag: '1',
-            },
-          },
-          flags: {
-            1: {
-              title: 'Reviewing',
-            },
-            2: {
-              title: 'Reviewed',
-            },
-          },
-          validator: 'todo',
-          search: {
-            validator: 'todoSearch',
-          },
-        },
-      },
-      functions: {
-        createTodo: {
-          title: 'Create Todo',
-          scene: 'create',
-          autoRight: 1,
-          atomClassName: 'todo',
-          action: 'create',
-          sorting: 1,
-          menu: 1,
-        },
-        listTodo: {
-          title: 'Todo List',
-          scene: 'list',
-          autoRight: 1,
-          atomClassName: 'todo',
-          action: 'read',
-          sorting: 1,
-          menu: 1,
-        },
-      },
-    },
-    validation: {
-      validators: {
-        todo: {
-          schemas: 'todo',
-        },
-        todoSearch: {
-          schemas: 'todoSearch',
-        },
-      },
-      keywords: {},
-      schemas: {
-        todo: schemas.todo,
-        todoSearch: schemas.todoSearch,
-      },
-    },
-  };
-  return meta;
+// eslint-disable-next-line
+module.exports = appInfo => {
+  const config = {};
+  return config;
 };
 
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = app => {
-  class Todo extends app.meta.Model {
-    constructor(ctx) {
-      super(ctx, { table: 'testTodo', options: { disableDeleted: false } });
-    }
-  }
-  return Todo;
+module.exports = {
+  'zh-cn': __webpack_require__(3),
 };
 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-const todo = __webpack_require__(2);
-
-module.exports = app => {
-  const models = {
-    todo,
-  };
-  return models;
+module.exports = {
+  Todo: '待办',
+  Review: '评审',
+  Reviewing: '评审中',
+  Reviewed: '已评审',
+  'Create Todo': '新建待办',
+  'Todo List': '待办清单',
+  'What to do': '要做什么',
+  Completed: '已完成',
 };
 
 
@@ -231,71 +159,139 @@ module.exports = app => {
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = app => {
-
-  class Todo extends app.Service {
-
-    async create({ atomClass, key, atom, user }) {
-      // add todo
-      const res = await this.ctx.model.todo.insert({
-        atomId: key.atomId,
-      });
-      return { atomId: key.atomId, itemId: res.insertId };
-    }
-
-    async read({ atomClass, key, item, user }) {
-      // read
-    }
-
-    async select({ atomClass, options, items, user }) {
-      // select
-    }
-
-    async write({ atomClass, key, item, validation, user }) {
-      // update todo
-      await this.ctx.model.todo.update({
-        id: key.itemId,
-        completed: item.completed,
-      });
-    }
-
-    async delete({ atomClass, key, user }) {
-      // delete todo
-      await this.ctx.model.todo.delete({
-        id: key.itemId,
-      });
-    }
-
-    async action({ action, atomClass, key, user }) {
-      if (action === 101) {
-        // change flag
-        await this.ctx.meta.atom.flag({
-          key,
-          atom: { atomFlag: 2 },
-          user,
-        });
-      }
-    }
-
-    async enable({ atomClass, key, atom, user }) {
-      // enable
-      const atomFlag = atom.atomEnabled ? 1 : 0;
-      // change flag
-      await this.ctx.meta.atom.flag({
-        key,
-        atom: { atomFlag },
-        user,
-      });
-    }
-
-  }
-
-  return Todo;
+// error code should start from 1001
+module.exports = {
 };
 
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+module.exports = {
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const version = __webpack_require__(7);
+const todo = __webpack_require__(8);
+
+module.exports = app => {
+  const routes = [
+    // version
+    { method: 'post', path: 'version/update', controller: version, middlewares: 'inner' },
+    { method: 'post', path: 'version/init', controller: version, middlewares: 'inner' },
+    { method: 'post', path: 'version/test', controller: version, middlewares: 'test' },
+    // todo
+    { method: 'post', path: 'todo/create', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/read', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/select', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/write', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/delete', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/action', controller: todo, middlewares: 'inner' },
+    { method: 'post', path: 'todo/enable', controller: todo, middlewares: 'inner' },
+  ];
+  return routes;
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+  class VersionController extends app.Controller {
+
+    async update() {
+      await this.service.version.update(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async init() {
+      await this.service.version.init(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async test() {
+      await this.service.version.test(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+  }
+  return VersionController;
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+module.exports = app => {
+
+  class TodoController extends app.Controller {
+
+    async create() {
+      const res = await this.ctx.service.todo.create(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async read() {
+      const res = await this.ctx.service.todo.read(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async select() {
+      const res = await this.ctx.service.todo.select(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async write() {
+      await this.ctx.service.todo.write(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async delete() {
+      await this.ctx.service.todo.delete(this.ctx.request.body);
+      this.ctx.success();
+    }
+
+    async action() {
+      const res = await this.ctx.service.todo.action(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async enable() {
+      const res = await this.ctx.service.todo.enable(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+  }
+  return TodoController;
+};
+
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const version = __webpack_require__(10);
+const todo = __webpack_require__(11);
+
+module.exports = app => {
+  const services = {
+    version,
+    todo,
+  };
+  return services;
+};
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = app => {
@@ -403,207 +399,211 @@ module.exports = app => {
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const version = __webpack_require__(5);
-const todo = __webpack_require__(4);
-
-module.exports = app => {
-  const services = {
-    version,
-    todo,
-  };
-  return services;
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = app => {
-
-  class TodoController extends app.Controller {
-
-    async create() {
-      const res = await this.ctx.service.todo.create(this.ctx.request.body);
-      this.ctx.success(res);
-    }
-
-    async read() {
-      const res = await this.ctx.service.todo.read(this.ctx.request.body);
-      this.ctx.success(res);
-    }
-
-    async select() {
-      const res = await this.ctx.service.todo.select(this.ctx.request.body);
-      this.ctx.success(res);
-    }
-
-    async write() {
-      await this.ctx.service.todo.write(this.ctx.request.body);
-      this.ctx.success();
-    }
-
-    async delete() {
-      await this.ctx.service.todo.delete(this.ctx.request.body);
-      this.ctx.success();
-    }
-
-    async action() {
-      const res = await this.ctx.service.todo.action(this.ctx.request.body);
-      this.ctx.success(res);
-    }
-
-    async enable() {
-      const res = await this.ctx.service.todo.enable(this.ctx.request.body);
-      this.ctx.success(res);
-    }
-
-  }
-  return TodoController;
-};
-
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = app => {
-  class VersionController extends app.Controller {
-
-    async update() {
-      await this.service.version.update(this.ctx.request.body);
-      this.ctx.success();
-    }
-
-    async init() {
-      await this.service.version.init(this.ctx.request.body);
-      this.ctx.success();
-    }
-
-    async test() {
-      await this.service.version.test(this.ctx.request.body);
-      this.ctx.success();
-    }
-
-  }
-  return VersionController;
-};
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const version = __webpack_require__(8);
-const todo = __webpack_require__(7);
-
-module.exports = app => {
-  const routes = [
-    // version
-    { method: 'post', path: 'version/update', controller: version, middlewares: 'inner' },
-    { method: 'post', path: 'version/init', controller: version, middlewares: 'inner' },
-    { method: 'post', path: 'version/test', controller: version, middlewares: 'test' },
-    // todo
-    { method: 'post', path: 'todo/create', controller: todo, middlewares: 'inner' },
-    { method: 'post', path: 'todo/read', controller: todo, middlewares: 'inner' },
-    { method: 'post', path: 'todo/select', controller: todo, middlewares: 'inner' },
-    { method: 'post', path: 'todo/write', controller: todo, middlewares: 'inner' },
-    { method: 'post', path: 'todo/delete', controller: todo, middlewares: 'inner' },
-    { method: 'post', path: 'todo/action', controller: todo, middlewares: 'inner' },
-    { method: 'post', path: 'todo/enable', controller: todo, middlewares: 'inner' },
-  ];
-  return routes;
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = {
-};
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
-// error code should start from 1001
-module.exports = {
+module.exports = app => {
+
+  class Todo extends app.Service {
+
+    async create({ atomClass, key, atom, user }) {
+      // add todo
+      const res = await this.ctx.model.todo.insert({
+        atomId: key.atomId,
+      });
+      return { atomId: key.atomId, itemId: res.insertId };
+    }
+
+    async read({ atomClass, key, item, user }) {
+      // read
+    }
+
+    async select({ atomClass, options, items, user }) {
+      // select
+    }
+
+    async write({ atomClass, key, item, validation, user }) {
+      // update todo
+      await this.ctx.model.todo.update({
+        id: key.itemId,
+        completed: item.completed,
+      });
+    }
+
+    async delete({ atomClass, key, user }) {
+      // delete todo
+      await this.ctx.model.todo.delete({
+        id: key.itemId,
+      });
+    }
+
+    async action({ action, atomClass, key, user }) {
+      if (action === 101) {
+        // change flag
+        await this.ctx.meta.atom.flag({
+          key,
+          atom: { atomFlag: 2 },
+          user,
+        });
+      }
+    }
+
+    async enable({ atomClass, key, atom, user }) {
+      // enable
+      const atomFlag = atom.atomEnabled ? 1 : 0;
+      // change flag
+      await this.ctx.meta.atom.flag({
+        key,
+        atom: { atomFlag },
+        user,
+      });
+    }
+
+  }
+
+  return Todo;
 };
 
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = {
-  Todo: '待办',
-  Review: '评审',
-  Reviewing: '评审中',
-  Reviewed: '已评审',
-  'Create Todo': '新建待办',
-  'Todo List': '待办清单',
-  'What to do': '要做什么',
-  Completed: '已完成',
+const todo = __webpack_require__(13);
+
+module.exports = app => {
+  const models = {
+    todo,
+  };
+  return models;
 };
 
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-module.exports = {
-  'zh-cn': __webpack_require__(12),
+module.exports = app => {
+  class Todo extends app.meta.Model {
+    constructor(ctx) {
+      super(ctx, { table: 'testTodo', options: { disableDeleted: false } });
+    }
+  }
+  return Todo;
 };
 
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// eslint-disable-next-line
-module.exports = appInfo => {
-  const config = {};
-  return config;
+module.exports = app => {
+  const schemas = __webpack_require__(15)(app);
+  const meta = {
+    base: {
+      atoms: {
+        todo: {
+          info: {
+            title: 'Todo',
+            tableName: 'testTodo',
+          },
+          actions: {
+            review: {
+              code: 101,
+              title: 'Review',
+              flag: '1',
+            },
+          },
+          flags: {
+            1: {
+              title: 'Reviewing',
+            },
+            2: {
+              title: 'Reviewed',
+            },
+          },
+          validator: 'todo',
+          search: {
+            validator: 'todoSearch',
+          },
+        },
+      },
+      functions: {
+        createTodo: {
+          title: 'Create Todo',
+          scene: 'create',
+          autoRight: 1,
+          atomClassName: 'todo',
+          action: 'create',
+          sorting: 1,
+          menu: 1,
+        },
+        listTodo: {
+          title: 'Todo List',
+          scene: 'list',
+          autoRight: 1,
+          atomClassName: 'todo',
+          action: 'read',
+          sorting: 1,
+          menu: 1,
+        },
+      },
+    },
+    validation: {
+      validators: {
+        todo: {
+          schemas: 'todo',
+        },
+        todoSearch: {
+          schemas: 'todoSearch',
+        },
+      },
+      keywords: {},
+      schemas: {
+        todo: schemas.todo,
+        todoSearch: schemas.todoSearch,
+      },
+    },
+  };
+  return meta;
 };
 
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const config = __webpack_require__(14);
-const locales = __webpack_require__(13);
-const errors = __webpack_require__(11);
-const middlewares = __webpack_require__(10);
+/***/ (function(module, exports) {
 
 module.exports = app => {
-
-  // routes
-  const routes = __webpack_require__(9)(app);
-  // services
-  const services = __webpack_require__(6)(app);
-  // models
-  const models = __webpack_require__(3)(app);
-  // meta
-  const meta = __webpack_require__(1)(app);
-
-  return {
-    routes,
-    services,
-    models,
-    config,
-    locales,
-    errors,
-    middlewares,
-    meta,
+  const schemas = {};
+  // todo
+  schemas.todo = {
+    type: 'object',
+    properties: {
+      atomName: {
+        type: 'string',
+        ebType: 'text',
+        ebTitle: 'What to do',
+        notEmpty: true,
+      },
+      completed: {
+        type: 'number',
+        ebType: 'toggle',
+        ebTitle: 'Completed',
+      },
+    },
   };
-
+  // todo search
+  schemas.todoSearch = {
+    type: 'object',
+    properties: {
+      completed: {
+        type: 'number',
+        ebType: 'toggle',
+        ebTitle: 'Completed',
+      },
+    },
+  };
+  return schemas;
 };
 
 
