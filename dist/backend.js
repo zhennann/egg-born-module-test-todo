@@ -325,6 +325,7 @@ module.exports = app => {
           roleName: 'reviewer',
           roleIdParent: roleAuthenticated.id,
         });
+        await this.ctx.meta.role.build();
 
         // add role rights
         const roleRights = [
