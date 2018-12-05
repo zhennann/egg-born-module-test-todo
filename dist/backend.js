@@ -407,7 +407,7 @@ module.exports = app => {
 
   class Todo extends app.Service {
 
-    async create({ atomClass, key, atom, user }) {
+    async create({ atomClass, key, item, user }) {
       // add todo
       const res = await this.ctx.model.todo.insert({
         atomId: key.atomId,
