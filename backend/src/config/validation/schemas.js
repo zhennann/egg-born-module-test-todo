@@ -23,8 +23,18 @@ module.exports = app => {
     properties: {
       completed: {
         type: 'number',
-        ebType: 'toggle',
+        ebType: 'select',
         ebTitle: 'Completed',
+        ebMultiple: false,
+        ebOptionsBlankAuto: true,
+        ebOptions: [
+          { title: 'Imcompleted', value: 0 },
+          { title: 'Completed', value: 1 },
+        ],
+        ebParams: {
+          openIn: 'page',
+          closeOnSelect: true,
+        },
       },
     },
   };
