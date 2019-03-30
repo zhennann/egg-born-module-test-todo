@@ -319,22 +319,35 @@ module.exports = app => {
 
     async init(options) {
       if (options.version === 1) {
-        // create role: reviewer
+        // roles
         const roleAuthenticated = await this.ctx.meta.role.getSystemRole({ roleName: 'authenticated' });
-        await this.ctx.meta.role.add({
-          roleName: 'reviewer',
-          roleIdParent: roleAuthenticated.id,
+        const roleTemplate = await this.ctx.meta.role.getSystemRole({ roleName: 'template' });
+        const roleSuperuser = await this.ctx.meta.role.getSystemRole({ roleName: 'superuser' });
+        // create role: test-todo-writer
+        let roleId = await this.ctx.meta.role.add({
+          roleName: 'test-todo-writer',
+          roleIdParent: roleTemplate.id,
         });
+        // role:authenticated include test-todo-writer
+        await this.ctx.meta.role.addRoleInc({ roleId: roleAuthenticated.id, roleIdInc: roleId });
+
+        // create role: test-todo-reviewer
+        roleId = await this.ctx.meta.role.add({
+          roleName: 'test-todo-reviewer',
+          roleIdParent: roleTemplate.id,
+        });
+        // role:superuser include test-todo-reviewer
+        await this.ctx.meta.role.addRoleInc({ roleId: roleSuperuser.id, roleIdInc: roleId });
+        // build
         await this.ctx.meta.role.build();
 
         // add role rights
         const roleRights = [
-          { roleName: 'authenticated', action: 'create' },
-          { roleName: 'authenticated', action: 'write', scopeNames: 0 },
-          { roleName: 'authenticated', action: 'delete', scopeNames: 0 },
-          { roleName: 'authenticated', action: 'read', scopeNames: 'authenticated' },
-          { roleName: 'reviewer', action: 'review', scopeNames: 'authenticated' },
-          { roleName: 'superuser', action: 'review', scopeNames: 'authenticated' },
+          { roleName: 'test-todo-writer', action: 'create' },
+          { roleName: 'test-todo-writer', action: 'write', scopeNames: 0 },
+          { roleName: 'test-todo-writer', action: 'delete', scopeNames: 0 },
+          { roleName: 'test-todo-writer', action: 'read', scopeNames: 'authenticated' },
+          { roleName: 'test-todo-reviewer', action: 'review', scopeNames: 'authenticated' },
         ];
         const module = this.ctx.app.meta.modules[this.ctx.module.info.relativeName];
         const atomClass = await this.ctx.meta.atomClass.get({ atomClassName: 'todo' });
@@ -364,8 +377,8 @@ module.exports = app => {
     async test() {
       // create test users: demo001,demo002
       const users = [
-        { userName: 'demo001', roleName: 'registered' },
-        { userName: 'demo002', roleName: 'reviewer' },
+        { userName: 'demo001', roleName: 'activated' },
+        { userName: 'demo002', roleName: 'test-todo-reviewer' },
       ];
       const userIds = [];
       for (const user of users) {
@@ -423,7 +436,7 @@ module.exports = app => {
       // select
     }
 
-    async write({ atomClass, key, item, validation, user }) {
+    async write({ atomClass, key, item, user }) {
       // update todo
       await this.ctx.model.todo.update({
         id: key.itemId,
@@ -599,8 +612,18 @@ module.exports = app => {
     properties: {
       completed: {
         type: 'number',
-        ebType: 'toggle',
+        ebType: 'select',
         ebTitle: 'Completed',
+        ebMultiple: false,
+        ebOptionsBlankAuto: true,
+        ebOptions: [
+          { title: 'Imcompleted', value: 0 },
+          { title: 'Completed', value: 1 },
+        ],
+        ebParams: {
+          openIn: 'page',
+          closeOnSelect: true,
+        },
       },
     },
   };
