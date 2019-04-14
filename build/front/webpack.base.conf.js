@@ -18,7 +18,9 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
   externals: {
-    vue: 'vue',
+    vue: {
+      root: 'Vue',
+    },
   },
   resolve: {
     extensions: [ '.js', '.vue', '.json' ],
