@@ -1,6 +1,6 @@
 <template>
   <eb-page>
-    <eb-navbar title="test1" eb-back-link="Back"></eb-navbar>
+    <eb-navbar title="test" eb-back-link="Back"></eb-navbar>
   </eb-page>
 </template>
 <script>
