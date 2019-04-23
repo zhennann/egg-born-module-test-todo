@@ -1,6 +1,9 @@
 <template>
   <eb-page>
     <eb-navbar title="test" eb-back-link="Back"></eb-navbar>
+    <f7-block>
+      <f7-link @click="onClickTest">Test</f7-link>
+    </f7-block>
   </eb-page>
 </template>
 <script>
@@ -13,7 +16,12 @@ export default {
     return {};
   },
   methods: {
-
+    onClickTest() {
+      this.$api.post('todo/progress').then(data => {
+        const progressId = data.progressId;
+        this.$view.dialog.progressbar({ progressId, title: 'This is a test' });
+      });
+    },
   },
 };
 

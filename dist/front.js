@@ -228,12 +228,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: /Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib??vue-loader-options!./front/src/pages/testvue.vue?vue&type=template&id=158a48eb&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('eb-page',[_c('eb-navbar',{attrs:{"title":"test","eb-back-link":"Back"}})],1)}
+// CONCATENATED MODULE: /Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib??vue-loader-options!./front/src/pages/testvue.vue?vue&type=template&id=4f29b507&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('eb-page',[_c('eb-navbar',{attrs:{"title":"test","eb-back-link":"Back"}}),_vm._v(" "),_c('f7-block',[_c('f7-link',{on:{"click":_vm.onClickTest}},[_vm._v("Test")])],1)],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./front/src/pages/testvue.vue?vue&type=template&id=158a48eb&
+// CONCATENATED MODULE: ./front/src/pages/testvue.vue?vue&type=template&id=4f29b507&
 
 // EXTERNAL MODULE: external {"root":"Vue"}
 var external_root_Vue_ = __webpack_require__(0);
@@ -248,7 +248,20 @@ var ebPageContext = external_root_Vue_default.a.prototype.$meta.module.get('a-co
   data: function data() {
     return {};
   },
-  methods: {}
+  methods: {
+    onClickTest: function onClickTest() {
+      var _this = this;
+
+      this.$api.post('todo/progress').then(function (data) {
+        var progressId = data.progressId;
+
+        _this.$view.dialog.progressbar({
+          progressId: progressId,
+          title: 'This is a test'
+        });
+      });
+    }
+  }
 });
 // CONCATENATED MODULE: ./front/src/pages/testvue.vue?vue&type=script&lang=js&
  /* harmony default export */ var pages_testvuevue_type_script_lang_js_ = (testvuevue_type_script_lang_js_); 

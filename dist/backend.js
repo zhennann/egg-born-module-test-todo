@@ -198,6 +198,11 @@ module.exports = app => {
     { method: 'post', path: 'todo/delete', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
     { method: 'post', path: 'todo/action', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
     { method: 'post', path: 'todo/enable', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
+
+    // test
+    { method: 'post', path: 'todo/progress', controller: todo, middlewares: 'progress' },
+    { method: 'post', path: 'todo/progressInBackground', controller: todo, middlewares: 'inner,progress', meta: { auth: { enable: false } } },
+
   ];
   return routes;
 };
@@ -271,6 +276,59 @@ module.exports = app => {
     async enable() {
       const res = await this.ctx.service.todo.enable(this.ctx.request.body);
       this.ctx.success(res);
+    }
+
+    async progress() {
+      const progressId = await this.ctx.meta.progress.create();
+      this.ctx.performActionInBackground({
+        method: 'post',
+        url: 'todo/progressInBackground',
+        body: {
+          progressId,
+        },
+      });
+      this.ctx.success({ progressId });
+    }
+
+    async progressInBackground() {
+      const progressId = this.ctx.request.body.progressId;
+      try {
+        // loop one
+        const total = 3;
+        let progress = 0;
+        for (let i = 0; i < 3; i++) {
+          const text = `task level: ${i + 1}`;
+          await this.ctx.meta.progress.update({
+            progressId,
+            progressNo: 0,
+            total,
+            progress: progress++,
+            text,
+          });
+          // doing
+          await this.ctx.meta.util.sleep(1500);
+          let progress2 = 0;
+          for (let j = 0; j < 5; j++) {
+            const text = `task level2 : ${j + 1}`;
+            await this.ctx.meta.progress.update({
+              progressId,
+              progressNo: 1,
+              total: 5,
+              progress: progress2++,
+              text,
+            });
+            // doing
+            await this.ctx.meta.util.sleep(1000);
+          }
+        }
+        // done
+        await this.ctx.meta.progress.done({ progressId });
+        this.ctx.success(true);
+      } catch (err) {
+        // error
+        await this.ctx.meta.progress.error({ progressId, message: err.message });
+        throw err;
+      }
     }
 
   }
