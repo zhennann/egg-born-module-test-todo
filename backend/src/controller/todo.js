@@ -53,9 +53,9 @@ module.exports = app => {
       const progressId = this.ctx.request.body.progressId;
       try {
         // loop one
-        const total = 3;
+        const total = 2;
         let progress = 0;
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
           const text = `task level: ${i + 1}`;
           await this.ctx.meta.progress.update({
             progressId,
@@ -67,12 +67,12 @@ module.exports = app => {
           // doing
           await this.ctx.meta.util.sleep(1500);
           let progress2 = 0;
-          for (let j = 0; j < 5; j++) {
+          for (let j = 0; j < 2; j++) {
             const text = `task level2 : ${j + 1}`;
             await this.ctx.meta.progress.update({
               progressId,
               progressNo: 1,
-              total: 5,
+              total: 2,
               progress: progress2++,
               text,
             });
