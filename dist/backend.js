@@ -200,6 +200,7 @@ module.exports = app => {
     { method: 'post', path: 'todo/enable', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
 
     // test
+    { method: 'get', path: 'todo/test', controller: todo },
     { method: 'post', path: 'todo/progress', controller: todo, middlewares: 'progress' },
     { method: 'post', path: 'todo/progressInBackground', controller: todo, middlewares: 'inner,progress', meta: { auth: { enable: false } } },
 
@@ -275,6 +276,13 @@ module.exports = app => {
 
     async enable() {
       const res = await this.ctx.service.todo.enable(this.ctx.request.body);
+      this.ctx.success(res);
+    }
+
+    async test() {
+      const res = await this.ctx.model.todo.select({ where: {
+        ids: [ '1\'', '2', '3' ],
+      } });
       this.ctx.success(res);
     }
 

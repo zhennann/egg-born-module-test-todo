@@ -37,6 +37,13 @@ module.exports = app => {
       this.ctx.success(res);
     }
 
+    async test() {
+      const res = await this.ctx.model.todo.select({ where: {
+        ids: [ '1\'', '2', '3' ],
+      } });
+      this.ctx.success(res);
+    }
+
     async progress() {
       const progressId = await this.ctx.meta.progress.create();
       this.ctx.performActionInBackground({
