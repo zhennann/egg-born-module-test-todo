@@ -410,7 +410,7 @@ module.exports = app => {
         // role:superuser include test-todo-reviewer
         await this.ctx.meta.role.addRoleInc({ roleId: roleSuperuser.id, roleIdInc: roleId });
         // build
-        await this.ctx.meta.role.build();
+        await this.ctx.meta.role.setDirty(true);
 
         // add role rights
         const roleRights = [
