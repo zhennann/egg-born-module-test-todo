@@ -228,12 +228,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: /Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib??vue-loader-options!./front/src/pages/testvue.vue?vue&type=template&id=4f29b507&
+// CONCATENATED MODULE: /Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib??vue-loader-options!./front/src/pages/testvue.vue?vue&type=template&id=755f77b9&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('eb-page',[_c('eb-navbar',{attrs:{"title":"test","eb-back-link":"Back"}}),_vm._v(" "),_c('f7-block',[_c('f7-link',{on:{"click":_vm.onClickTest}},[_vm._v("Test")])],1)],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./front/src/pages/testvue.vue?vue&type=template&id=4f29b507&
+// CONCATENATED MODULE: ./front/src/pages/testvue.vue?vue&type=template&id=755f77b9&
 
 // EXTERNAL MODULE: external {"root":"Vue"}
 var external_root_Vue_ = __webpack_require__(0);
@@ -258,6 +258,10 @@ var ebPageContext = external_root_Vue_default.a.prototype.$meta.module.get('a-co
         _this.$view.dialog.progressbar({
           progressId: progressId,
           title: 'This is a test'
+        }).then(function (data) {
+          console.log(data);
+        })["catch"](function (err) {
+          console.log(err);
         });
       });
     }
