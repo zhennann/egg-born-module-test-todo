@@ -3,6 +3,8 @@
     <eb-navbar title="test" eb-back-link="Back"></eb-navbar>
     <f7-block>
       <f7-link @click="onClickTest">Test</f7-link>
+      <br />
+      <f7-link @click="onClickSelectAtoms">Select Atoms</f7-link>
     </f7-block>
   </eb-page>
 </template>
@@ -13,7 +15,10 @@ export default {
   mixins: [ ebPageContext ],
   components: {},
   data() {
-    return {};
+    return {
+      atomId: 8,
+      atomIds: null,
+    };
   },
   methods: {
     onClickTest() {
@@ -24,6 +29,25 @@ export default {
         }).catch(err => {
           console.log(err);
         });
+      });
+    },
+    onClickSelectAtoms() {
+      const url = '/a/base/atom/select';
+      this.$view.navigate(url, {
+        target: '_self',
+        context: {
+          params: {
+            selectMode: 'single',
+            selectedAtomId: this.atomId,
+            selectedAtomIds: this.atomIds,
+            atomClass: null,
+          },
+          callback: (code, data) => {
+            if (code === 200) {
+              this.atomIds = data.atomIds;
+            }
+          },
+        },
       });
     },
   },
