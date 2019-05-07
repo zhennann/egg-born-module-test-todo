@@ -228,12 +228,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: /Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib??vue-loader-options!./front/src/pages/testvue.vue?vue&type=template&id=755f77b9&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('eb-page',[_c('eb-navbar',{attrs:{"title":"test","eb-back-link":"Back"}}),_vm._v(" "),_c('f7-block',[_c('f7-link',{on:{"click":_vm.onClickTest}},[_vm._v("Test")])],1)],1)}
+// CONCATENATED MODULE: /Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/wind/Documents/data/cabloy/egg-born-demo/node_modules/vue-loader/lib??vue-loader-options!./front/src/pages/testvue.vue?vue&type=template&id=ae6f812a&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('eb-page',[_c('eb-navbar',{attrs:{"title":"test","eb-back-link":"Back"}}),_vm._v(" "),_c('f7-block',[_c('f7-link',{on:{"click":_vm.onClickTest}},[_vm._v("Test")]),_vm._v(" "),_c('br'),_vm._v(" "),_c('f7-link',{on:{"click":_vm.onClickSelectSingleAtom}},[_vm._v("Select Single Atom")]),_vm._v(" "),_c('div',[_vm._v(_vm._s(_vm.atomId))]),_vm._v(" "),_c('br'),_vm._v(" "),_c('f7-link',{on:{"click":_vm.onClickSelectAtoms}},[_vm._v("Select Atoms")]),_vm._v(" "),_c('div',[_vm._v(_vm._s(_vm.atomIds))])],1)],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./front/src/pages/testvue.vue?vue&type=template&id=755f77b9&
+// CONCATENATED MODULE: ./front/src/pages/testvue.vue?vue&type=template&id=ae6f812a&
 
 // EXTERNAL MODULE: external {"root":"Vue"}
 var external_root_Vue_ = __webpack_require__(0);
@@ -246,7 +246,10 @@ var ebPageContext = external_root_Vue_default.a.prototype.$meta.module.get('a-co
   mixins: [ebPageContext],
   components: {},
   data: function data() {
-    return {};
+    return {
+      atomId: null,
+      atomIds: null
+    };
   },
   methods: {
     onClickTest: function onClickTest() {
@@ -263,6 +266,54 @@ var ebPageContext = external_root_Vue_default.a.prototype.$meta.module.get('a-co
         })["catch"](function (err) {
           console.log(err);
         });
+      });
+    },
+    onClickSelectSingleAtom: function onClickSelectSingleAtom() {
+      var _this2 = this;
+
+      var url = '/a/base/atom/select';
+      this.$view.navigate(url, {
+        target: '_self',
+        context: {
+          params: {
+            selectMode: 'single',
+            selectedAtomId: this.atomId,
+            atomClass: {
+              module: 'a-cms',
+              atomClassName: 'article'
+            },
+            where: {
+              'f.sticky': 1
+            }
+          },
+          callback: function callback(code, selectedAtom) {
+            if (code === 200) {
+              _this2.atomId = selectedAtom && selectedAtom.atomId;
+            }
+          }
+        }
+      });
+    },
+    onClickSelectAtoms: function onClickSelectAtoms() {
+      var _this3 = this;
+
+      var url = '/a/base/atom/select';
+      this.$view.navigate(url, {
+        target: '_self',
+        context: {
+          params: {
+            selectMode: 'multiple',
+            selectedAtomIds: this.atomIds,
+            atomClass: null
+          },
+          callback: function callback(code, selectedAtoms) {
+            if (code === 200) {
+              _this3.atomIds = selectedAtoms && selectedAtoms.map(function (item) {
+                return item.atomId;
+              });
+            }
+          }
+        }
       });
     }
   }

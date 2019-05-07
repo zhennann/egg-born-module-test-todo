@@ -4,7 +4,11 @@
     <f7-block>
       <f7-link @click="onClickTest">Test</f7-link>
       <br />
+      <f7-link @click="onClickSelectSingleAtom">Select Single Atom</f7-link>
+      <div>{{atomId}}</div>
+      <br />
       <f7-link @click="onClickSelectAtoms">Select Atoms</f7-link>
+      <div>{{atomIds}}</div>
     </f7-block>
   </eb-page>
 </template>
@@ -16,7 +20,7 @@ export default {
   components: {},
   data() {
     return {
-      atomId: 8,
+      atomId: null,
       atomIds: null,
     };
   },
@@ -31,7 +35,7 @@ export default {
         });
       });
     },
-    onClickSelectAtoms() {
+    onClickSelectSingleAtom() {
       const url = '/a/base/atom/select';
       this.$view.navigate(url, {
         target: '_self',
@@ -39,12 +43,35 @@ export default {
           params: {
             selectMode: 'single',
             selectedAtomId: this.atomId,
+            atomClass: {
+              module: 'a-cms',
+              atomClassName: 'article',
+            },
+            where: {
+              'f.sticky': 1,
+            },
+          },
+          callback: (code, selectedAtom) => {
+            if (code === 200) {
+              this.atomId = selectedAtom && selectedAtom.atomId;
+            }
+          },
+        },
+      });
+    },
+    onClickSelectAtoms() {
+      const url = '/a/base/atom/select';
+      this.$view.navigate(url, {
+        target: '_self',
+        context: {
+          params: {
+            selectMode: 'multiple',
             selectedAtomIds: this.atomIds,
             atomClass: null,
           },
-          callback: (code, data) => {
+          callback: (code, selectedAtoms) => {
             if (code === 200) {
-              this.atomIds = data.atomIds;
+              this.atomIds = selectedAtoms && selectedAtoms.map(item => item.atomId);
             }
           },
         },
