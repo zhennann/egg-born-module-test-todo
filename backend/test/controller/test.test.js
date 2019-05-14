@@ -1,5 +1,16 @@
 const { app, mockUrl, mockInfo, assert } = require('egg-born-mock')(__dirname);
 
+// describe('local test', () => {
+//   it('moment', async () => {
+//     const moment = require('moment');
+//     const d = moment().add(10, 'seconds').utc()
+//       .format();
+//     console.log(d);
+//     console.log(moment().format());
+//     assert(d);
+//   });
+// });
+
 describe('test/controller/test.test.js', () => {
   it('atom:todo', async () => {
     app.mockSession({});
