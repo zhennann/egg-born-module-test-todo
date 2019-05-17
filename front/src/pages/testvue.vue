@@ -10,6 +10,7 @@
       <br />
       <f7-link @click="onClickSelectAtoms">Select Atoms</f7-link>
       <div>{{atomIds}}</div>
+      <img src="../assets/img/user.png" />
     </f7-block>
   </eb-page>
 </template>

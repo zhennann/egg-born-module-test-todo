@@ -1,6 +1,6 @@
 {
   "name": "egg-born-module-test-todo",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "title": "Todo",
   "eggBornModule": {
     "fileVersion": 1,
