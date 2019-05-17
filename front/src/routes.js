@@ -4,4 +4,5 @@ function load(name) {
 
 export default [
   { path: 'testvue', component: load('testvue') },
+  { path: 'test', component: load('test') },
 ];

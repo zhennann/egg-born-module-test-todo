@@ -2,6 +2,7 @@
   <eb-page>
     <eb-navbar title="test" eb-back-link="Back"></eb-navbar>
     <f7-block>
+      <div class="test">test red</div>
       <f7-link @click="onClickTest">Test</f7-link>
       <br />
       <f7-link @click="onClickSelectSingleAtom">Select Single Atom</f7-link>
