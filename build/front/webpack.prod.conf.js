@@ -35,7 +35,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   optimization: {
     runtimeChunk: false,
     splitChunks: false,
-    minimize: true,
+    minimize: false,
   },
 });
 

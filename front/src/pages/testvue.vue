@@ -26,6 +26,12 @@ export default {
       atomIds: null,
     };
   },
+  beforeCreate() {
+
+  },
+  beforeDestroy() {
+
+  },
   methods: {
     onClickTest() {
       this.$api.post('todo/progress').then(data => {
