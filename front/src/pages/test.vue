@@ -1,6 +1,20 @@
 <template>
   <eb-page>
     <eb-navbar title="test" eb-back-link="Back"></eb-navbar>
+    <f7-block strong class="no-padding-horizontal">
+      <f7-treeview>
+        <f7-treeview-item label="images" icon-f7="folder_fill">
+          <f7-treeview-item label="avatar.png" icon-f7="images_fill" />
+          <f7-treeview-item label="background.jpg" icon-f7="images_fill" />
+        </f7-treeview-item>
+        <f7-treeview-item label="documents" icon-f7="folder_fill">
+          <f7-treeview-item label="cv.docx" icon-f7="document_text_fill" />
+          <f7-treeview-item label="info.docx" icon-f7="document_text_fill" />
+        </f7-treeview-item>
+        <f7-treeview-item label=".gitignore" icon-f7="logo_github" />
+        <f7-treeview-item label="index.html" icon-f7="document_text_fill" />
+      </f7-treeview>
+    </f7-block>
     <f7-block>
       <div class="test">{{message}}</div>
       <eb-button @click="onClick"></eb-button>
