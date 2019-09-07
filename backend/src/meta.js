@@ -48,6 +48,12 @@ module.exports = app => {
           sorting: 1,
           menu: 1,
         },
+        testRightLocale: {
+          title: 'TestRightLocale',
+          scene: 'tools',
+          sorting: 1,
+          menu: 1,
+        },
       },
     },
     validation: {

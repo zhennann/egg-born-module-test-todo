@@ -7,4 +7,5 @@ module.exports = {
   'Todo List': '待办清单',
   'What to do': '要做什么',
   Completed: '已完成',
+  TestRightLocale: '测试权限本地化',
 };
