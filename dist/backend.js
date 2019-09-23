@@ -152,6 +152,7 @@ module.exports = {
   'Todo List': '待办清单',
   'What to do': '要做什么',
   Completed: '已完成',
+  TestRightLocale: '测试权限本地化',
 };
 
 
@@ -189,12 +190,7 @@ module.exports = app => {
     { method: 'post', path: 'todo/create', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
     { method: 'post', path: 'todo/read', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
     { method: 'post', path: 'todo/select', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
-    { method: 'post', path: 'todo/write', controller: todo, middlewares: 'inner,validate',
-      meta: {
-        auth: { enable: false },
-        validate: { validator: 'todo', data: 'item' },
-      },
-    },
+    { method: 'post', path: 'todo/write', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
     { method: 'post', path: 'todo/delete', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
     { method: 'post', path: 'todo/action', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
     { method: 'post', path: 'todo/enable', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
@@ -608,6 +604,12 @@ module.exports = app => {
           autoRight: 1,
           atomClassName: 'todo',
           action: 'read',
+          sorting: 1,
+          menu: 1,
+        },
+        testRightLocale: {
+          title: 'TestRightLocale',
+          scene: 'tools',
           sorting: 1,
           menu: 1,
         },
