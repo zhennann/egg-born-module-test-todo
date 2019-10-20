@@ -12,6 +12,47 @@
       <div>{{atomIds}}</div>
       <img src="../assets/img/user.png" />
     </f7-block>
+    <f7-list>
+      <f7-list-group>
+        <eb-list-item group-title title="A"></eb-list-item>
+        <eb-list-item title="A1">
+          <f7-list-group>
+            <eb-list-item group-title title="AA"></eb-list-item>
+            <eb-list-item title="AA1"></eb-list-item>
+            <eb-list-item title="AA2"></eb-list-item>
+          </f7-list-group>
+        </eb-list-item>
+        <eb-list-item title="A2"></eb-list-item>
+      </f7-list-group>
+      <f7-list-group>
+        <eb-list-item group-title title="B"></eb-list-item>
+        <eb-list-item title="B1">
+          <f7-list-group>
+            <eb-list-item group-title title="BB"></eb-list-item>
+            <eb-list-item title="BB1"></eb-list-item>
+            <eb-list-item title="BB2"></eb-list-item>
+          </f7-list-group>
+        </eb-list-item>
+        <eb-list-item title="B2"></eb-list-item>
+      </f7-list-group>
+      <f7-list-group>
+        <eb-list-item group-title title="C"></eb-list-item>
+        <eb-list-item title="C1">
+        </eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+        <eb-list-item title="C2"></eb-list-item>
+      </f7-list-group>
+    </f7-list>
   </eb-page>
 </template>
 <script>
