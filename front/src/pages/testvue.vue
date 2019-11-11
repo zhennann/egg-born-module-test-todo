@@ -37,8 +37,7 @@
       </f7-list-group>
       <f7-list-group>
         <eb-list-item group-title title="C"></eb-list-item>
-        <eb-list-item title="C1">
-        </eb-list-item>
+        <eb-list-item title="C1"></eb-list-item>
         <eb-list-item title="C2"></eb-list-item>
         <eb-list-item title="C2"></eb-list-item>
         <eb-list-item title="C2"></eb-list-item>
