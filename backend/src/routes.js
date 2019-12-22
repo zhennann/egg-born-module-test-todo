@@ -17,6 +17,7 @@ module.exports = app => {
     { method: 'post', path: 'todo/enable', controller: todo, middlewares: 'inner', meta: { auth: { enable: false } } },
 
     // test
+    { method: 'post', path: 'todo/uploadInner', controller: todo },
     { method: 'get', path: 'todo/test', controller: todo },
     { method: 'post', path: 'todo/progress', controller: todo, middlewares: 'progress' },
     { method: 'post', path: 'todo/progressInBackground', controller: todo, middlewares: 'inner,progress', meta: { auth: { enable: false } } },

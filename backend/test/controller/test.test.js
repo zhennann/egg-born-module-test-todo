@@ -11,6 +11,14 @@ const { app, mockUrl, mockInfo, assert } = require('egg-born-mock')(__dirname);
 //   });
 // });
 
+describe('curl', () => {
+  it('curl', async () => {
+
+    await app.httpRequest().post(mockUrl('/test/todo/todo/uploadInner')).send();
+
+  });
+});
+
 describe('test/controller/test.test.js', () => {
   it('atom:todo', async () => {
     app.mockSession({});
