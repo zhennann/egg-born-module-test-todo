@@ -17,7 +17,7 @@
     </f7-block>
     <f7-block>
       <div class="test">{{message}}</div>
-      <eb-button @click="onClick"></eb-button>
+      <eb-button id="downlogs" @click="onClick">click</eb-button>
     </f7-block>
   </eb-page>
 </template>
@@ -39,8 +39,16 @@ function install(_Vue) {
 
     },
     methods: {
+      // onClick() {
+      //   this.message = '2';
+      // },
       onClick() {
-        this.message = '2';
+        const app = this.$f7;
+        const vm = app.calendar.create({
+          openIn: "auto",
+          inputEl: "#downlogs",
+        });
+        vm.open();
       },
     },
   };
