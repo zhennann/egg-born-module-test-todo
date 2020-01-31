@@ -129,6 +129,10 @@ module.exports = app => {
       this.ctx.success();
     }
 
+    async reload() {
+      this.ctx.app.meta.broadcast.reload();
+    }
+
   }
   return TodoController;
 };

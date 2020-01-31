@@ -18,6 +18,7 @@
     <f7-block>
       <div class="test">{{message}}</div>
       <eb-button id="downlogs" @click="onClick">click</eb-button>
+      <eb-button @click="onClickReload">reload</eb-button>
     </f7-block>
   </eb-page>
 </template>
@@ -50,6 +51,9 @@ function install(_Vue) {
         });
         vm.open();
       },
+      onClickReload() {
+        return this.$api.post('todo/reload');
+      }
     },
   };
 }
