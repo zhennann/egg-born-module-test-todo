@@ -20,6 +20,14 @@
       <eb-button id="downlogs" @click="onClick">click</eb-button>
       <eb-button @click="onClickReload">reload</eb-button>
     </f7-block>
+    <eb-list>
+      <eb-list-item smartSelect title="select1" :smartSelectParams="{ openIn: 'page', closeOnSelect: true }">
+        <eb-select name="select1" v-model="select1" :options="options1"></eb-select>
+      </eb-list-item>
+      <eb-list-item smartSelect title="select2" :smartSelectParams="{ openIn: 'page', closeOnSelect: true }">
+        <eb-select name="select2" v-model="select2" :options="options2"></eb-select>
+      </eb-list-item>
+    </eb-list>
   </eb-page>
 </template>
 <script>
@@ -31,6 +39,10 @@ function install(_Vue) {
     data() {
       return {
         message: '1',
+        select1: null,
+        options1: [{ title: '男', value: '1' }, { title: '女', value: '2' }],
+        select2: null,
+        options2: [{ title: '水', value: '1' }, { title: '火', value: '2' }],
       };
     },
     beforeCreate() {
