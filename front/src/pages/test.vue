@@ -19,6 +19,7 @@
       <div class="test">{{message}}</div>
       <eb-button id="downlogs" @click="onClick">click</eb-button>
       <eb-button @click="onClickReload">reload</eb-button>
+      <eb-button @click="onClickOpenViewIsolate">Open View Isolate</eb-button>
     </f7-block>
     <eb-list>
       <eb-list-item smartSelect title="select1" :smartSelectParams="{ openIn: 'page', closeOnSelect: true }">
@@ -65,6 +66,11 @@ function install(_Vue) {
       },
       onClickReload() {
         return this.$api.post('todo/reload');
+      },
+      onClickOpenViewIsolate() {
+        this.$view.navigate('/test/todo/testa', {
+          target: '_view',
+        });
       }
     },
   };
