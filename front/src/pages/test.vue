@@ -20,6 +20,7 @@
       <eb-button id="downlogs" @click="onClick">click</eb-button>
       <eb-button @click="onClickReload">reload</eb-button>
       <eb-button @click="onClickOpenViewIsolate">Open View Isolate</eb-button>
+      <eb-button @click="onClickOpenViewSame">Open View Same</eb-button>
     </f7-block>
     <eb-list>
       <eb-list-item smartSelect title="select1" :smartSelectParams="{ openIn: 'page', closeOnSelect: true }">
@@ -71,7 +72,10 @@ function install(_Vue) {
         this.$view.navigate('/test/todo/testa', {
           target: '_view',
         });
-      }
+      },
+      onClickOpenViewSame() {
+        this.$view.navigate('/test/todo/testa');
+      },
     },
   };
 }
