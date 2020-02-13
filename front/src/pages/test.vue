@@ -1,6 +1,6 @@
 <template>
   <eb-page>
-    <eb-navbar title="test" eb-back-link="Back"></eb-navbar>
+    <eb-navbar large largeTransparent title="test" eb-back-link="Back"></eb-navbar>
     <f7-block strong class="no-padding-horizontal">
       <f7-treeview>
         <f7-treeview-item label="images" icon-f7="folder_fill">

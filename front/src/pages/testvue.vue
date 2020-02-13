@@ -1,6 +1,6 @@
 <template>
   <eb-page>
-    <eb-navbar title="test" eb-back-link="Back"></eb-navbar>
+    <eb-navbar large largeTransparent title="test" eb-back-link="Back"></eb-navbar>
     <f7-block>
       <div class="test">test red</div>
       <f7-link @click="onClickTest">Test</f7-link>
