@@ -9,4 +9,5 @@ export default [
   { path: 'testa', component: load('testa') },
   { path: 'testb', component: load('testb') },
   { path: 'testc', component: load('testc') },
+  { path: 'testtreeview', component: load('testtreeview') },
 ];
