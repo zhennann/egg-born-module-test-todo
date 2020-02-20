@@ -1,7 +1,7 @@
 <template>
   <eb-page>
     <eb-navbar large largeTransparent title="test-treeview" eb-back-link="Back"></eb-navbar>
-    <eb-treeview :options="treeOptions" :onPerform="onPerform">
+    <eb-treeview :options="treeOptions" :onNodePerform="onNodePerform" @node:click="onNodeClick">
       <div slot="content" slot-scope="{node}">{{`- ${node.id}`}}</div>
     </eb-treeview>
   </eb-page>
@@ -27,6 +27,7 @@ export default {
               id: item.id,
               attrs: {
                 //itemToggle: true,
+                link: '#',
                 label: item.roleName || '[New Role]',
                 toggle: item.catalog === 1,
                 loadChildren: item.catalog === 1,
@@ -41,10 +42,10 @@ export default {
           this.$view.toast.show({ text: err.message });
         });
     },
-    onNodeClick(node) {
-      this.$emit('node:click', node);
+    onNodeClick(e, node) {
+      console.log('node:click', node.id);
     },
-    onPerform(e, content, node) {
+    onNodePerform(e, content, node) {
       console.log(node.id);
     },
   },

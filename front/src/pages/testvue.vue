@@ -96,7 +96,7 @@ export default {
               atomClassName: 'article',
             },
             where: {
-              'f.sticky': 1,
+              'f.sticky': 0,
             },
           },
           callback: (code, selectedAtom) => {
