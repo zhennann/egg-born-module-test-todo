@@ -11,12 +11,28 @@
   </eb-page>
 </template>
 <script>
+//multiple:true,
+//checkbox:false,
+// checkOnLabel:false,
+// autoCheckChildren:true,
+// checked:false,
 export default {
   data() {
     return {
       root: {
         id: 0,
-        attrs: {}
+        attrs: {
+          //itemToggle: true,
+          //selectable: true,
+          //opened: true, // 暂时没有用处，因为opened时没有调用loadChildren
+          //
+          multiple: true,
+          checkbox: true,
+          checkOnLabel: true,
+          // autoCheckChildren:true,
+
+          // checked:false,
+        }
       },
     };
   },
@@ -30,7 +46,7 @@ export default {
               id: item.id,
               attrs: {
                 //itemToggle: true,
-                link: '#',
+                //link: '#',
                 label: item.roleName || '[New Role]',
                 toggle: item.catalog === 1,
                 loadChildren: item.catalog === 1,
@@ -54,6 +70,9 @@ export default {
     onPerformRootChange() {
       this.root = {
         id: 1,
+        attrs: {
+          //itemToggle: true,
+        }
       };
     }
   },
