@@ -14,7 +14,6 @@
 //multiple:true,
 //checkbox:false,
 // checkOnLabel:false,
-// autoCheckChildren:true,
 // checked:false,
 export default {
   data() {
@@ -26,10 +25,9 @@ export default {
           selectable: true,
           //opened: true, // 暂时没有用处，因为opened时没有调用loadChildren
           //
-          multiple: true,
+          multiple: false,
           checkbox: true,
           checkOnLabel: true,
-          // autoCheckChildren:true,
 
           // checked:false,
         }
