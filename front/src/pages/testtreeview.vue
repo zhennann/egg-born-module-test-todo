@@ -1,7 +1,11 @@
 <template>
   <eb-page>
-    <eb-navbar large largeTransparent title="test-treeview" eb-back-link="Back"></eb-navbar>
-    <eb-treeview :options="treeOptions" :onNodePerform="onNodePerform" @node:click="onNodeClick">
+    <eb-navbar large largeTransparent title="test-treeview" eb-back-link="Back">
+      <f7-nav-right>
+        <eb-link :onPerform="onPerformRootChange">role:1</eb-link>
+      </f7-nav-right>
+    </eb-navbar>
+    <eb-treeview :root="root" :onLoadChildren="onLoadChildren" :onNodePerform="onNodePerform" @node:click="onNodeClick">
       <div slot="content" slot-scope="{node}">{{`- ${node.id}`}}</div>
     </eb-treeview>
   </eb-page>
@@ -10,16 +14,15 @@
 export default {
   data() {
     return {
-      treeOptions: {
-        loadChildren: node => {
-          return this.loadChildren(node);
-        },
+      root: {
+        id: 0,
+        attrs: {}
       },
     };
   },
   methods: {
-    loadChildren(node) {
-      const roleId = node ? node.id : this.roleIdStart;
+    onLoadChildren(node) {
+      const roleId = node.id;
       return this.$api.post('/a/baseadmin/role/children', { roleId, page: { size: 0 } })
         .then(data => {
           const list = data.list.map(item => {
@@ -46,8 +49,13 @@ export default {
       console.log('node:click', node.id);
     },
     onNodePerform(e, content, node) {
-      console.log(node.id);
+      console.log('node:perform', node.id);
     },
+    onPerformRootChange() {
+      this.root = {
+        id: 1,
+      };
+    }
   },
 }
 
