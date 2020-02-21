@@ -6,7 +6,7 @@
       </f7-nav-right>
     </eb-navbar>
     <eb-treeview :root="root" :onLoadChildren="onLoadChildren" :onNodePerform="onNodePerform" @node:click="onNodeClick">
-      <div slot="content" slot-scope="{node}">{{`- ${node.id}`}}</div>
+      <div slot="content" slot-scope="{node}">{{`- ${node.attrs.checked}`}}</div>
     </eb-treeview>
   </eb-page>
 </template>
@@ -23,7 +23,7 @@ export default {
         id: 0,
         attrs: {
           //itemToggle: true,
-          //selectable: true,
+          selectable: true,
           //opened: true, // 暂时没有用处，因为opened时没有调用loadChildren
           //
           multiple: true,
