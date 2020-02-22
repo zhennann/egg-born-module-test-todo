@@ -78,9 +78,8 @@ export default {
     onPerformRootSelect() {
       //const selected = this.$refs.tree.selected();
       //console.log(selected);
-      this.$refs.tree.checked().then(res => {
-        console.log(res.map(item => item.id).join());
-      });
+      const checked = this.$refs.tree.checked();
+      console.log(checked.map(item => item.id).join());
 
     },
 
