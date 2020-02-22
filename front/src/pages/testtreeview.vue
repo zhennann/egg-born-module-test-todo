@@ -2,11 +2,12 @@
   <eb-page>
     <eb-navbar large largeTransparent title="test-treeview" eb-back-link="Back">
       <f7-nav-right>
-        <eb-link :onPerform="onPerformRootChange">role:1</eb-link>
+        <eb-link :onPerform="onPerformRootChange">change</eb-link>
+        <eb-link :onPerform="onPerformRootSelect">select</eb-link>
       </f7-nav-right>
     </eb-navbar>
-    <eb-treeview :root="root" :onLoadChildren="onLoadChildren" :onNodePerform="onNodePerform" @node:click="onNodeClick">
-      <div slot="content" slot-scope="{node}">{{`- ${node.attrs.checked}`}}</div>
+    <eb-treeview ref="tree" :root="root" :onLoadChildren="onLoadChildren" :onNodePerform="onNodePerform" @node:click="onNodeClick">
+      <div slot="content" slot-scope="{node}">{{`- ${node.id}`}}</div>
     </eb-treeview>
   </eb-page>
 </template>
@@ -25,7 +26,7 @@ export default {
           selectable: true,
           //opened: true, // 暂时没有用处，因为opened时没有调用loadChildren
           //
-          multiple: false,
+          multiple: true,
           checkbox: true,
           checkOnLabel: true,
 
@@ -57,6 +58,7 @@ export default {
         })
         .catch(err => {
           this.$view.toast.show({ text: err.message });
+          throw err;
         });
     },
     onNodeClick(e, node) {
@@ -72,7 +74,16 @@ export default {
           //itemToggle: true,
         }
       };
-    }
+    },
+    onPerformRootSelect() {
+      //const selected = this.$refs.tree.selected();
+      //console.log(selected);
+      this.$refs.tree.checked().then(res => {
+        console.log(res.map(item => item.id).join());
+      });
+
+    },
+
   },
 }
 
