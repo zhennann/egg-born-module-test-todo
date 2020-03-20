@@ -79,7 +79,7 @@ export default {
         this.$view.dialog.progressbar({ progressId, title: 'This is a test' }).then(data => {
           console.log(data);
         }).catch(err => {
-          console.log(err);
+          console.error(err);
         });
       });
     },
