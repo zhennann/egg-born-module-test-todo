@@ -130,6 +130,7 @@ module.exports = app => {
     }
 
     async reload() {
+      // 此特性被丢弃
       this.ctx.app.meta.broadcast.reload();
     }
 
