@@ -7,6 +7,10 @@ module.exports = app => {
           info: {
             title: 'Todo',
             tableName: 'testTodo',
+            meta: {
+              comment: false,
+              attachment: false,
+            },
           },
           actions: {
             review: {
