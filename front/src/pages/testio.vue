@@ -22,6 +22,7 @@ export default {
       this.socket = socket;
       this.socket.on('connect', () => {
         console.log('---connect');
+        this.socket.emit('msg', { id: 2 });
       })
       console.log(this.socket);
     });
