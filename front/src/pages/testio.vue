@@ -1,8 +1,10 @@
 <template>
   <eb-page>
     <eb-navbar large largeTransparent title="test-io" eb-back-link="Back"></eb-navbar>
-    <div>a</div>
-    <f7-link @click="onClickTest">Test</f7-link>
+    <f7-block>
+      <div>a</div>
+      <f7-link @click="onClickTest">Test</f7-link>
+    </f7-block>
   </eb-page>
 </template>
 <script>
