@@ -75,6 +75,18 @@ module.exports = app => {
         todoSearch: schemas.todoSearch,
       },
     },
+    socketio: {
+      messages: {
+        test: {
+          info: {
+            title: 'Test',
+          },
+          callback: {
+
+          },
+        },
+      },
+    },
   };
   return meta;
 };
