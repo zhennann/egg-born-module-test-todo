@@ -102,7 +102,7 @@ module.exports = app => {
 
     async uploadInner() {
       // download
-      const url = 'https://zhennann.cabloy.com/api/a/file/file/download/00b3fb6235fd49abb9313bd19539d65a.jpg';
+      const url = 'https://admin2.zhennann.com/api/a/file/file/download/00b3fb6235fd49abb9313bd19539d65a.jpg';
       const res = await this.ctx.curl(url, { method: 'GET', timeout: 10000 });
       // console.log(res.data);
       // console.log(Buffer.isBuffer(res.data));
