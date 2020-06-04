@@ -15791,7 +15791,7 @@ module.exports = app => {
 
     async uploadInner() {
       // download
-      const url = 'https://zhennann.cabloy.com/api/a/file/file/download/00b3fb6235fd49abb9313bd19539d65a.jpg';
+      const url = 'https://admin2.zhennann.com/api/a/file/file/download/00b3fb6235fd49abb9313bd19539d65a.jpg';
       const res = await this.ctx.curl(url, { method: 'GET', timeout: 10000 });
       // console.log(res.data);
       // console.log(Buffer.isBuffer(res.data));
@@ -19814,7 +19814,7 @@ function RequestSigner(request, credentials) {
   if (typeof request === 'string') request = url.parse(request)
 
   var headers = request.headers = (request.headers || {}),
-      hostParts = this.matchHost(request.hostname || request.host || headers.Host || headers.host)
+      hostParts = (!this.service || !this.region) && this.matchHost(request.hostname || request.host || headers.Host || headers.host)
 
   this.request = request
   this.credentials = credentials || this.defaultCredentials()
@@ -19851,6 +19851,19 @@ RequestSigner.prototype.matchHost = function(host) {
   if (hostParts[1] === 'es')
     hostParts = hostParts.reverse()
 
+  if (hostParts[1] == 's3') {
+    hostParts[0] = 's3'
+    hostParts[1] = 'us-east-1'
+  } else {
+    for (var i = 0; i < 2; i++) {
+      if (/^s3-/.test(hostParts[i])) {
+        hostParts[1] = hostParts[i].slice(3)
+        hostParts[0] = 's3'
+        break
+      }
+    }
+  }
+
   return hostParts
 }
 
@@ -19864,10 +19877,9 @@ RequestSigner.prototype.isSingleRegion = function() {
 }
 
 RequestSigner.prototype.createHost = function() {
-  var region = this.isSingleRegion() ? '' :
-        (this.service === 's3' && this.region !== 'us-east-1' ? '-' : '.') + this.region,
-      service = this.service === 'ses' ? 'email' : this.service
-  return service + region + '.amazonaws.com'
+  var region = this.isSingleRegion() ? '' : '.' + this.region,
+      subdomain = this.service === 'ses' ? 'email' : this.service
+  return subdomain + region + '.amazonaws.com'
 }
 
 RequestSigner.prototype.prepareRequest = function() {
